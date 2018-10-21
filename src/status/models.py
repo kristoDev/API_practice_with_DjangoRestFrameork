@@ -1,19 +1,37 @@
 # -*- coding: utf-8 -*-
 #from __future__ import unicode_literals
 
+from django.conf import settings
 from django.db import models
 
 
 
 
+def upload_status_image(instance, filename):
+    return "status/{user}/{filename}".format(user=instance.user, filename=filename)
+
+
+class StatusQuerySet(models.QuerySet):
+    pass
+
+
+class StatusManager(models.Manager):
+    def get_queryset(self):
+        return StatusQuerySet(self.model, using=self._db)
+
+
 # Create your models here.
 class Status(models.Model):
 
-	user		= models.ForeignKey
-	content		= models.TextField(nul=True, blanc=True)
-	image		= models.imageField(nul=True, blanc=True)
-	update		= models.DateTimeField(auto_add_now=True, nul=True, blanc=True)
-	timestamp	= models.DateTimeField(auto_add_now=True, nul=True, blanc=True)
+	user		= models.ForeignKey(settings.AUTH_USER_MODEL)
+	content		= models.TextField(null=True, blank=True)
+	image		= models.imageField(upload_to=upload_status_image, null=True, blank=True)
+	update		= models.DateTimeField(auto_now=True)
+	timestamp	= models.DateTimeField(auto_now_add=True)
+
+
+	Objects	= StatusManager()
+
 
 	def __str__(self):
 		return str(self.content)[:50]
