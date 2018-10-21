@@ -1,1 +1,1 @@
-# API practice with Django RestFrameork
+# API_practice_with_DjangoRestFrameork
