@@ -24,7 +24,7 @@ class StatusForm(forms.ModelForm):
 		content = self.cleaned_data.get('content')
 
 		if len(content) > 240:
-			raise ValidationError(
+			raise forms.ValidationError(
 				"Your text is too long, keep it under 240 characters"
 				)
 		
@@ -37,8 +37,9 @@ class StatusForm(forms.ModelForm):
 
 		if content == "":
 			content = None
-			image = data.get("image", None)
 
+		image = data.get("image", None)
+		
 		if content is None and image is None:
 			raise forms.ValidationError('Content or image is required.')
 
