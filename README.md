@@ -1,1 +1,1 @@
-# API practice with Django RestFrameork
+# API practice with Django RestFramework
