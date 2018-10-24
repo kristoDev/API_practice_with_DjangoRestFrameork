@@ -17,3 +17,20 @@ class StatusSerializer(serializers.ModelSerializer):
 
 		]
 
+
+		def valudate(self,data):
+
+			content = data.get('content', None)
+
+			if content == "":
+				content = None
+
+			image = data.get('image', None)
+
+			if content is None or image is None:
+
+				raise serializers.ValidationError(
+					"either the image or content is missing"
+					)
+
+				return data
